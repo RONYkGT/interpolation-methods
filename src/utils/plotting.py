@@ -84,36 +84,5 @@ def write_text(ax, text):
     ax.axis('off')  # Turn off axis lines for text
     ax.text(0.5, 0.5, text, fontsize=12, ha='center', va='center')
 
-def plot_interpolation(x_points, y_points, x_curve, y_curve, headers, table, polynomial, title="Newton Interpolation"):
-    """Modified plot function to handle the new table format."""
-    fig = plt.figure(figsize=(12, 10))
-    
-    # Create main plot in upper portion
-    ax = fig.add_axes([0.1, 0.4, 0.8, 0.5])
-    
-    # Plot interpolation curve
-    ax.plot(x_curve, y_curve, 'b-', label='Interpolation')
-    
-    # Plot data points
-    ax.plot(x_points, y_points, 'ro', label='Data points')
-    
-    # Customize plot
-    ax.set_title(title)
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.grid(True)
-    ax.legend()
-    
-    # Add divided differences table
-    table_latex = create_table_latex(headers, table)
-    plt.text(0.1, 0.25, r"Divided Differences Table:", transform=fig.transFigure, fontsize=10)
-    plt.text(0.1, 0.15, f"${table_latex}$", transform=fig.transFigure, fontsize=10)
-    
-    # Add polynomial
-    plt.text(0.1, 0.35, "Interpolation polynomial:", transform=fig.transFigure, fontsize=10)
-    plt.text(0.1, 0.3, f"$p(x) = {latex(polynomial)}$", transform=fig.transFigure, fontsize=10)
-    
-    return fig, ax
-
 def show():
     plt.show()
