@@ -1,8 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import sympy as sp
-from utils.divided_differences import calculate_divided_differences
-from utils.plotting import plot_interpolation
+from utils.divided_differences import calculate_divided_differences, beautify_difftable
+import utils.plotting as plt
 class NewtonInterpolation:
     def __init__(self, x_points, y_points):
         """
@@ -39,33 +38,23 @@ class NewtonInterpolation:
         self.polynomial = sp.expand(poly)
         self.latex_polynomial = latex_poly
 
-    
-    def evaluate(self, x_value):
-        """Evaluate the interpolation polynomial at a given point."""
-        if self.coefficients is None:
-            self.create_table()
-        
-        result = self.coefficients[0]
-        term = 1
-        for i in range(1, len(self.coefficients)):
-            term *= (x_value - self.x[i-1])
-            result += self.coefficients[i] * term
-        return result
-    
+
     def plot(self, num_points=100):
         """Plot the interpolation polynomial and data points."""
         # Ensure we have the polynomial
         if self.polynomial is None:
             self.interpolate()
-        
-        x_min, x_max = min(self.x), max(self.x)
-        x_range = np.linspace(x_min, x_max, num_points)
-        y_range = [self.evaluate(x) for x in x_range]
-        
-        return plot_interpolation(
-            self.x, self.y,
-            x_range, y_range,
-            self.headers, self.table,
-            self.polynomial,
-            title="Newton Interpolation"
-        )
+        fig, axes = plt.create_fig(2)
+        tablefig, tableax = plt.create_fig(1)
+        # Plot a graph on the first subplot
+        plt.plot_graph(axes[0], self.difftable[0], self.difftable[1], self.polynomial, ' Newton Interpolation')
+
+        # Create a table and draw it on the second subplot
+        arr = beautify_difftable(self.difftable)
+        plt.draw_table(tableax, arr, ['x', 'y'])
+
+        # Write some text on the third subplot
+        plt.write_text(axes[1], "Deduced Polynomial from table:\n $P(x)=" + self.latex_polynomial +"$\n\nExpanded Form:\n$P(x)=" + sp.latex(sp.expand(self.polynomial)) + "$")
+
+        # Show the entire figure with all subplots
+        plt.show()

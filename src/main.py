@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 plt.rc('text', usetex=True)
 plt.rc('text.latex', preamble=r'\usepackage{amsmath}')
 # Example usage
-x_points = [0, 1, 2, 4]
-y_points = [1, 2, 4, 8]
+x_points = [0, 1, 2, 4, 6,8]
+y_points = [1, 2, 4, 8, 10, 5]
 
 # Create interpolation object
 newton = NewtonInterpolation(x_points, y_points)
