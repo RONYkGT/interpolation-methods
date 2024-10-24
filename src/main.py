@@ -1,10 +1,21 @@
 from newton_interpolation import NewtonInterpolation
-import matplotlib.pyplot as plt
-plt.rc('text', usetex=True)
-plt.rc('text.latex', preamble=r'\usepackage{amsmath}')
+
+def take_n_points(n: int):
+    x_vals = list()
+    y_vals = list()
+    for _ in range(n):
+        x = float(input("Enter x value: "))
+        y = float(input("Enter y value: "))
+        x_vals.append(x)
+        y_vals.append(y)
+    return x_vals, y_vals
+
+
+
+n = int(input("Enter the number of input points(x,y): "))
+
 # Example usage
-x_points = [0, 1, 2, 4, 6,8]
-y_points = [1, 2, 4, 8, 10, 5]
+x_points, y_points = take_n_points(n)
 
 # Create interpolation object
 newton = NewtonInterpolation(x_points, y_points)
@@ -12,4 +23,3 @@ newton = NewtonInterpolation(x_points, y_points)
 # Get interpolation polynomial and create plot
 newton.interpolate()
 newton.plot()
-plt.show()
