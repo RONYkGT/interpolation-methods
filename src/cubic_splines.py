@@ -106,7 +106,10 @@ class CubicSplineInterpolation:
            (((y_i / h_iplus1) - (h_iplus1 * (w_i / 6))) * (x_iplus1 - x)) + \
            (((y_iplus1 / h_iplus1) + (h_iplus1 * (w_iplus1 / 6))) * (x - x_i))
             
-            condition = (x >= x_i) & (x < x_iplus1)
+            if i == n-1:
+                condition = (x >= x_i) & (x <= x_iplus1)
+            else:
+                condition = (x >= x_i) & (x < x_iplus1) 
 
             splines.append((func.expand(),condition))
 
