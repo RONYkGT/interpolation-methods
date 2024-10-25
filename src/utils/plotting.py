@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sympy as sp
-plt.rc('text', usetex=True)
+plt.rc('text', usetex=True) # Use latex to render text in matplotlib
 plt.rc('text.latex', preamble=r'\usepackage{amsmath}')
 
 def create_fig(n):
@@ -21,6 +21,10 @@ def plot_graph(ax, x_points, y_points, function, title):
     Plot a graph of a function along the input points on a given axis.
     Args:
         ax (matplotlib.axes.Axes): The axis on which to plot.
+        x_points (list): List of x values to plot.
+        y_points (list): List of y values to plot.
+        function (sp.polynomial): Polynomial to draw.
+        title (str): Graph title.
     """
     if len(x_points) != len(y_points) or function is None:
         return
@@ -28,9 +32,9 @@ def plot_graph(ax, x_points, y_points, function, title):
     ax.scatter(x_points, y_points, color='red', label='Data points')
 
     x = sp.symbols('x')
-    poly_func = sp.lambdify(x, function, 'numpy')
-    x_curve = np.linspace(min(x_points), max(x_points), 100)
-    y_curve = poly_func(x_curve)
+    poly_func = sp.lambdify(x, function, 'numpy') # Turn sympy polynomial into a lambda function that takes x and returns f(x)
+    x_curve = np.linspace(min(x_points), max(x_points), 100) # Create evenly spaced x values to put in f(x)
+    y_curve = poly_func(x_curve) # Create an array out of f(x_curve)
 
     ax.plot(x_curve, y_curve, label='Polynomial', color='blue')
     ax.set_title(title)
@@ -41,7 +45,11 @@ def plot_graph(ax, x_points, y_points, function, title):
 
 def latex_table(data):
     """
-    Generate a LaTeX formatted table from a 2D array, with each cell wrapped in dollar signs.
+    Generate a LaTeX formatted table from a 2D array, with each cell wrapped in dollar signs for latex format.
+    Args:
+        data (list of list): table array
+    Returns:
+        str: LaTeX formatted table
     """
     latex_str = "\\begin{tabular}{|" + " | ".join(["c"] * len(data[0])) + "|} \\hline "
     for row in data:
@@ -60,18 +68,26 @@ def draw_table(ax, arr, header=list()):
     Draw a table with the given data in a LaTeX form on a given axis.
     Args:
         ax (matplotlib.axes.Axes): The axis on which to draw the table.
+        arr (list of list): table array
+        header (list): table header
     """
     arr_copy = arr.copy()
     if header:
-        if len(header) < len(arr_copy[0]):
-            header.extend([''] * (len(arr_copy[0]) - len(header)))
+        if len(header) <= len(arr_copy):
+            header.extend([''] * (len(arr_copy[0]) - len(header))) # Extend the remaining header columns to match size
         else:
             print("Header can't be larger than column size of table")
             return
+        
+        # Add header argument to the array first row
         arr_copy.insert(0, header)
     
+    # Get table latex format of the array
     latex_str = latex_table(arr_copy)
+
     ax.axis('off')  # Turn off the axis for the table
+
+    # Write the latex table on the axis
     ax.text(0.5, 0.5, f"${latex_str}$", fontsize=12, ha='center', va='center')
 
 def write_text(ax, text):
