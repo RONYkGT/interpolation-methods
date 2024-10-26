@@ -32,7 +32,12 @@ while choice != 3:
         newton.plot()
 
     elif choice == 2:
-        spline = CubicSplineInterpolation(x_points,y_points)
+        w0 = input("Enter weight w_0 (leave empty for default value 0): ")
+        w0 = int(w0) if w0.isdigit() else 0
+        wn = input("Enter weight w_n (leave empty for default value 0): ")
+        wn = int(wn) if wn .isdigit() else 0
+
+        spline = CubicSplineInterpolation(x_points,y_points, w0, wn)
         spline.generate_splines()
         print("for x = 3: ")
         print(spline.evaluate_for_x(-3))
@@ -42,31 +47,3 @@ while choice != 3:
         print("Invalid choice")  # This will be executed if the choice is neither 1 nor
     choice = int(input("Enter your choice again to choose another method: "))
 
-"""# Create interpolation object
-newton = NewtonInterpolation(x_points, y_points)
-
-# Get interpolation polynomial and create plot
-newton.interpolate()
-newton.plot()
-
-
-x_vals = [-6,-4,-2,-1,0,6,7]
-y_vals = [-121,-25,-1,-1,-1,335,503]
-cubic = CubicSplineInterpolation(x_vals,y_vals,0,0)
-print("\ndifftable: ")
-sp.pprint(cubic.difftable)
-print("\nh_i+1 values: \n")
-sp.pprint(cubic.h_values)
-print("\nA matrix: \n")
-sp.pprint(cubic.A_matrix)
-print("\nb vector: \n")
-sp.pprint(cubic.b_vector)
-print("\nw values: ")
-sp.pprint(cubic.w_values)
-cubic.generate_splines()
-print("for x = 3: ")
-print(cubic.evaluate_for_x(-3))
-cubic.plot()
-
-
-"""
