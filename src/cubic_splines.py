@@ -97,10 +97,10 @@ class CubicSplineInterpolation:
             y_i = self.difftable[1][i]
             y_iplus1 = self.difftable[1][i+1]
 
-            print(f"i = {i}")
-            print(f"h_iplus1 = {h_iplus1}")
-            print(f"wi = {w_i}")
-            print(f"wi+1 = {w_iplus1}")
+            #print(f"i = {i}")
+            #print(f"h_iplus1 = {h_iplus1}")
+            #print(f"wi = {w_i}")
+            #print(f"wi+1 = {w_iplus1}")
             #func = ((w_i / (6 * h_iplus1)) * ((x_iplus1 - x)**3)) + \
             #((w_iplus1 / (6 * h_iplus1)) * ((x - x_i)**3)) + \
             #(((y_i / h_iplus1) - (h_iplus1 * (w_i / 6))) * (x_iplus1 - x)) + \

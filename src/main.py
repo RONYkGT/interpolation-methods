@@ -1,13 +1,14 @@
 from newton_interpolation import NewtonInterpolation
 from cubic_splines import CubicSplineInterpolation
-#import sympy as sp
+from least_squares import LeastSquares
+from fractions import Fraction
 
 def take_n_points(n: int):
     x_vals = list()
     y_vals = list()
     for _ in range(n):
-        x = float(input("Enter x value: "))
-        y = float(input("Enter y value: "))
+        x = float(Fraction(input("Enter x value: ")))
+        y = float(Fraction(input("Enter y value: ")))
         x_vals.append(x)
         y_vals.append(y)
     return x_vals, y_vals
@@ -20,11 +21,12 @@ print("""
 Select the interpolation method:
     1. Newton Interpolation
     2. Cubic Spline Interpolation
-    3. Exit
+    3. Least Squares Model Interpolation
+    0. Exit
     """)
 
 choice = int(input("Enter your choice: "))
-while choice != 3:
+while choice != 0:
 
     if choice == 1:
         newton = NewtonInterpolation(x_points,y_points)
@@ -42,7 +44,32 @@ while choice != 3:
         print("for x = 3: ")
         print(spline.evaluate_for_x(-3))
         spline.plot()
-
+    
+    elif choice == 3:
+        print("""
+Select the model:
+    1. Polynomial Degree n Model
+    2. Exponential Model
+    3. Periodic Model
+    0. Back""")
+        model = LeastSquares(x_points, y_points)
+        model_choice = -1
+        while model_choice != 0:
+            model_choice = int(input("Enter your model choice: "))
+            if model_choice == 1:
+                degree = int(input("Enter the degree of the polynomial model: "))
+                model.polynomial_interpolation(degree)
+                model.plot()
+            elif model_choice == 2:
+                model.exponential_interpolation()
+                model.plot()
+            elif model_choice == 3:
+                model.periodic_interpolation()
+                model.plot()
+            elif model_choice != 0:
+                print("Enter a valid choice")
+                model_choice = int(input("Enter your model choice: "))
+                
     else:
         print("Invalid choice")  # This will be executed if the choice is neither 1 nor
     choice = int(input("Enter your choice again to choose another method: "))
