@@ -1,3 +1,4 @@
+.gitignore
 docker-compose.yml
 Dockerfile
 test.py
@@ -6,4 +7,4 @@ test2.py
 test3.py
 filename.png
 test2.png
-src/__pycache__
+src/__pycache__/*

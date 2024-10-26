@@ -101,10 +101,13 @@ class CubicSplineInterpolation:
             print(f"h_iplus1 = {h_iplus1}")
             print(f"wi = {w_i}")
             print(f"wi+1 = {w_iplus1}")
-            func = ((w_i / (6 * h_iplus1)) * ((x_iplus1 - x)**3)) + \
-           ((w_iplus1 / (6 * h_iplus1)) * ((x - x_i)**3)) + \
-           (((y_i / h_iplus1) - (h_iplus1 * (w_i / 6))) * (x_iplus1 - x)) + \
-           (((y_iplus1 / h_iplus1) + (h_iplus1 * (w_iplus1 / 6))) * (x - x_i))
+            #func = ((w_i / (6 * h_iplus1)) * ((x_iplus1 - x)**3)) + \
+            #((w_iplus1 / (6 * h_iplus1)) * ((x - x_i)**3)) + \
+            #(((y_i / h_iplus1) - (h_iplus1 * (w_i / 6))) * (x_iplus1 - x)) + \
+            #(((y_iplus1 / h_iplus1) + (h_iplus1 * (w_iplus1 / 6))) * (x - x_i))
+            func = ((x_iplus1-x)**3 * w_i + (x-x_i)**3 * w_iplus1)/(6*h_iplus1) + \
+            ((x_iplus1 - x)* y_i + (x-x_i)*y_iplus1)/h_iplus1 - \
+            (h_iplus1/6)*((x_iplus1 - x) * w_i + (x - x_i)*w_iplus1)
             
             if i == n-1:
                 condition = (x >= x_i) & (x <= x_iplus1)
