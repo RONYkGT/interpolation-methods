@@ -86,7 +86,7 @@ def draw_table(ax, arr, header=list()):
     latex_str = latex_table(arr_copy)
 
     ax.axis('off')  # Turn off the axis for the table
-
+    print(latex_str)
     # Write the latex table on the axis
     ax.text(0.5, 0.5, f"${latex_str}$", fontsize=12, ha='center', va='center')
 
@@ -97,6 +97,7 @@ def write_text(ax, text):
         ax (matplotlib.axes.Axes): The axis on which to write the text.
         text (str): The text to write.
     """
+    print(text)
     ax.axis('off')  # Turn off axis lines for text
     ax.text(0.5, 0.5, text, fontsize=12, ha='center', va='center')
 

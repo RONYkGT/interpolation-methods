@@ -13,7 +13,7 @@ def take_n_points(n: int):
         y_vals.append(y)
     return x_vals, y_vals
 
-
+print("Notice: If you can't run latex in matplotlib, you can still see the latex text as output in console.")
 n = int(input("Enter the number of input points(x,y): "))
 x_points, y_points = take_n_points(n)
 

@@ -61,7 +61,7 @@ class CubicSplineInterpolation:
         n = len(self.h_values) - 1
         vector = sp.zeros(n,1)
         for i in range(n):
-            vector[i] = (self.h_values[i] + self.h_values[i+1])*self.difftable[3][i]
+            vector[i] = (self.h_values[i] + self.h_values[i+1])*self.difftable[3][i] # Third row of the diff table
         self.b_vector = vector
     
     def solve_for_omega(self):
