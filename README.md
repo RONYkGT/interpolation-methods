@@ -13,8 +13,10 @@ do that on Windows by installing MiKTeX, run it and run the main.py file
 from this project, and it will prompt to automatically install required packages.
 When it does that, just click agree and wait - be patient.
 #### 2.2.1 Python Packages
+```
 matplotlib
 numpy
 sympy
+```
 You can automatically install required packages by running ”pip install requirements.txt”
 after opening the project directory in the terminal or command prompt.
