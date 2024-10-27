@@ -49,8 +49,10 @@ while choice != 0:
         print("""
 Select the model:
     1. Polynomial Degree n Model
-    2. Exponential Model
+    2. Powerlaw Model
     3. Periodic Model
+    4. Drug Concentration Model
+    5. Exponential Interpolation
     0. Back""")
         model = LeastSquares(x_points, y_points)
         model_choice = -1
@@ -61,10 +63,16 @@ Select the model:
                 model.polynomial_interpolation(degree)
                 model.plot()
             elif model_choice == 2:
-                model.exponential_interpolation()
+                model.powerlaw_interpolation()
                 model.plot()
             elif model_choice == 3:
                 model.periodic_interpolation()
+                model.plot()
+            elif model_choice == 4:
+                model.drug_concentration_interpolation()
+                model.plot()
+            elif model_choice == 5:
+                model.exponential_interpolation()
                 model.plot()
             elif model_choice != 0:
                 print("Enter a valid choice")

@@ -43,7 +43,7 @@ class LeastSquares:
         self.latex_C = r"\begin{bmatrix} c_1 \\ c_2  \\ c_3 \end{bmatrix}"
 
 
-    def exponential_interpolation(self):
+    def powerlaw_interpolation(self):
         """
         Interpolate an exponential function with a set of points.
         """
@@ -52,12 +52,37 @@ class LeastSquares:
         fy = sp.Lambda(y, sp.ln(y))
         self.b_vector = mat.generate_colvector_from_function(fy,self.y_values)
         self.c_vector, self.A_norm, self.b_norm = mat.solve_inconsistent_system(self.A_matrix, self.b_vector)
-        self.latex_extra = r"$y = c_1 e^{c_2 t}$" + "\n" + r"$\ln{y} = \ln{c_1}+c_2t$" + "\n" + r"$\ln{y} = k+c_2t $ where $k=\ln{x}$ " + "\n\n" + r"$b = \begin{bmatrix}\ln{y_1} \\ \ln{y_2} \\ \vdots \\ \ln{y_n} \end{bmatrix}$ and $ C = \begin{bmatrix} k \\ c_2 \end{bmatrix} $"
+        self.latex_extra = r"$y = c_1 x^{c_2}$" + "\n" + r"$\ln{y} = \ln{c_1}+c_2\ln{t}$" + "\n" + r"$\ln{y} = k+c_2\ln{t} $ where $k=\ln{x}$ " + "\n\n" + r"$b = \begin{bmatrix}\ln{y_1} \\ \ln{y_2} \\ \vdots \\ \ln{y_n} \end{bmatrix}$ and $ C = \begin{bmatrix} k \\ c_2 \end{bmatrix} $"
         self.latex_C = r" \begin{bmatrix} k \\ c_2 \end{bmatrix} "
         x = sp.symbols('x')
         c1 = sp.exp(self.c_vector[0][0])
         c2 = self.c_vector[1][0]
         self.function = c1*x**c2
+
+    def drug_concentration_interpolation(self):
+        self.A_matrix = mat.generate_vandermonde_matrix(self.x_values, 1)
+        b_vals = [log(y) - log(x) for x,y in zip(self.x_values, self.y_values)]
+        self.b_vector = np.array(b_vals).reshape(-1,1) # Convert b vals values to column vector
+        self.c_vector, self.A_norm, self.b_norm = mat.solve_inconsistent_system(self.A_matrix, self.b_vector)
+        self.latex_extra = r"$y = c_1xe^{c_2x}$" + "\n" + r"$\ln{y} = \ln{c_1} + \ln{t} + c_2t$" + "\n" + r"$\ln{y} - \ln{t} = \ln{c_1} + c_2t = k +c_2t$ where $k=\ln{x}$" + "\n\n"+ r"$b = \begin{bmatrix}\ln{y_1} - \ln{x_1} \\ \ln{y_2}- \ln{x_2} \\ \vdots \\ \ln{y_n} - \ln{x_n}\end{bmatrix}$ and $C = \begin{bmatrix} k \\ c_2 \end{bmatrix} $"
+        self.latex_C = r" \begin{bmatrix} k \\ c_2 \end{bmatrix} "
+        x = sp.symbols('x')
+        c1 = sp.exp(self.c_vector[0][0])
+        c2 = self.c_vector[1][0]
+        self.function = c1*x*sp.exp(c2*x)
+
+    def exponential_interpolation(self):
+        self.A_matrix = mat.generate_vandermonde_matrix(self.x_values, 1)
+        y = sp.symbols('y')
+        fy = sp.Lambda(y, sp.ln(y))
+        self.b_vector = mat.generate_colvector_from_function(fy,self.y_values)
+        self.c_vector, self.A_norm, self.b_norm = mat.solve_inconsistent_system(self.A_matrix, self.b_vector)
+        self.latex_extra = r"$y = c_1 e^{c_2t}$" + "\n" + r"$\ln{y} = \ln{c_1}+c_2t$" + "\n" + r"$\ln{y} = k+c_2t $ where $k=\ln{x}$ " + "\n\n" + r"$b = \begin{bmatrix}\ln{y_1} \\ \ln{y_2} \\ \vdots \\ \ln{y_n} \end{bmatrix}$ and $ C = \begin{bmatrix} k \\ c_2 \end{bmatrix} $"
+        self.latex_C = r" \begin{bmatrix} k \\ c_2 \end{bmatrix} "
+        x = sp.symbols('x')
+        c1 = sp.exp(self.c_vector[0][0])
+        c2 = self.c_vector[1][0]
+        self.function = c1*sp.exp(c2*x)
 
     def polynomial_interpolation(self, degree = 1):
         """
